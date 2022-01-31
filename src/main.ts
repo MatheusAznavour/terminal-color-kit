@@ -1,4 +1,5 @@
 const execSync = require('child_process').execSync
+import { Showcase } from "./showcase"
 
 interface Colors {
 	grey: string,
@@ -60,9 +61,7 @@ class ColorText {
 	messagePattern: string = this.colorParameter + this.backgroundParameter + this.messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
 
 	showcase(){
-		const LIGHTCOLORSHOWCASE = Object.entries(light).forEach(([key,val]) =>{console.log(val, key, this.TRANSPARENT_BACKGROUND_COLOR)})
-		const BOLDCOLORSHOWCASE = Object.entries(bold).forEach(([key,val]) =>{console.log(val, key, this.TRANSPARENT_BACKGROUND_COLOR)})
-		const BACKGROUNDCOLORSHOWCASE = Object.entries(background).forEach(([key,val]) =>{console.log(val, key,this.TRANSPARENT_BACKGROUND_COLOR)})
+		const SHOWCASE = new Showcase()
 	}
 	output(messageParameter: string, colorParameter: string, backgroundParameter: string){
 		return console.log(this.messagePattern)
@@ -82,5 +81,6 @@ export {
 	ColorText,
 	light,
 	bold,
-	background
+	background,
+	Colors
 }
