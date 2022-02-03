@@ -64,37 +64,50 @@ class ColorText {
     private TABULATEDMESSAGE: string = ""
     private ALIGN_MESSAGE_PATTERN: string = ""
     
+    charPosition = {x: 0, y: 0}
+
     showcase(){
 	    return ""
     }
 
     output(messageParameter: string, colorParameter: string, backgroundParameter: string){
-	    this.messageParameter = messageParameter
-	    this.colorParameter = colorParameter
-	    this.backgroundParameter = backgroundParameter
-
-	    const OUTPUT_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
-	    return console.log(OUTPUT_MESSAGE_PATTERN)
+	this.messageParameter = messageParameter
+	this.colorParameter = colorParameter
+	this.backgroundParameter = backgroundParameter
+	
+	this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WINDOW_WIDTH - messageParameter.length)
+	const OUTPUT_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.messageParameter + this.TABULATEDMESSAGE +this.TRANSPARENT_BACKGROUND_COLOR
+	return console.log(OUTPUT_MESSAGE_PATTERN)
     }
 
-    textAlign(messageParameter: string, colorParameter: string, backgroundParameter: string){
-	    this.messageParameter = messageParameter
-	    this.colorParameter = colorParameter
-	    this.backgroundParameter = backgroundParameter
-	    
-	    this.TABULATEDMESSAGE = this.TABULATION.repeat((this.WINDOW_PROPORTION.WINDOW_WIDTH / 2) - (messageParameter.length / 2))
-	    this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TABULATEDMESSAGE + this.TRANSPARENT_BACKGROUND_COLOR
-	    return console.log(this.ALIGN_MESSAGE_PATTERN)
+    align(messageParameter: string, colorParameter: string, backgroundParameter: string){
+	this.messageParameter = messageParameter
+	this.colorParameter = colorParameter
+	this.backgroundParameter = backgroundParameter
+	
+	this.TABULATEDMESSAGE = this.TABULATION.repeat((this.WINDOW_PROPORTION.WINDOW_WIDTH / 2) - (messageParameter.length / 2))
+	this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TABULATEDMESSAGE + this.TRANSPARENT_BACKGROUND_COLOR
+	return console.log(this.ALIGN_MESSAGE_PATTERN)
     }
 
-    textAlignRight(messageParameter: string, colorParameter: string, backgroundParameter: string){
-	    this.messageParameter = messageParameter
-	    this.colorParameter = colorParameter
-	    this.backgroundParameter = backgroundParameter
+    alignRight(messageParameter: string, colorParameter: string, backgroundParameter: string){
+	this.messageParameter = messageParameter
+	this.colorParameter = colorParameter
+	this.backgroundParameter = backgroundParameter
 
-	    this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WINDOW_WIDTH - messageParameter.length)
-	    this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
-	    return console.log(this.ALIGN_MESSAGE_PATTERN)
+	this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WINDOW_WIDTH - messageParameter.length)
+	this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
+	return console.log(this.ALIGN_MESSAGE_PATTERN)
+    }
+
+    fixed(xPosition: number, yPosition: number, messageParameter: string){
+	this.messageParameter = messageParameter
+	this.charPosition.x = xPosition
+	this.charPosition.y = yPosition
+
+	//Coloring causes a bug
+	const FIXED_MESSAGE_PATTERN = console.log(`\x1b7\x1b[%d;%df%s\x1b8`, xPosition, yPosition, messageParameter)
+	return FIXED_MESSAGE_PATTERN
     }
 }
 
