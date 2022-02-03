@@ -51,41 +51,50 @@ const background: Colors = {
 
 // Happy colouring!
 class ColorText {
-    WINDOWWIDTH = execSync("tput cols", {encoding: 'utf8'})
-    WINDOWHEIGHT = execSync("tput lines", {encoding: 'utf8'})
+    private WINDOW_PROPORTION = {WINDOW_WIDTH: execSync("tput cols", {encoding: 'utf8'}), WINDOW_HEIGHT: execSync("tput lines", {encoding: 'utf8'})}
     TRANSPARENT_BACKGROUND_COLOR: string = "\033[1;31;49m"
 
-    messageParameter: string = "Example msg"
-    colorParameter: string = light.blue
-    backgroundParameter: string = this.TRANSPARENT_BACKGROUND_COLOR
+    //
+    private messageParameter: string = "Example msg"
+    private colorParameter: string = light.blue
+    private backgroundParameter: string = this.TRANSPARENT_BACKGROUND_COLOR
 
+    //Case tabulation not have spaces, will not work
+    private TABULATION: string = " "
+    private TABULATEDMESSAGE: string = ""
+    private ALIGN_MESSAGE_PATTERN: string = ""
+    
     showcase(){
 	    return ""
     }
+
     output(messageParameter: string, colorParameter: string, backgroundParameter: string){
 	    this.messageParameter = messageParameter
 	    this.colorParameter = colorParameter
 	    this.backgroundParameter = backgroundParameter
+
 	    const OUTPUT_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
 	    return console.log(OUTPUT_MESSAGE_PATTERN)
     }
+
     textAlign(messageParameter: string, colorParameter: string, backgroundParameter: string){
 	    this.messageParameter = messageParameter
 	    this.colorParameter = colorParameter
 	    this.backgroundParameter = backgroundParameter
-	    const TABULATION = " "
-	    const TABULATEDMESSAGE = TABULATION.repeat((this.WINDOWWIDTH / 2) - (messageParameter.length / 2))
-	    const ALIGN_MESSAGE_PATTERN: string = this.colorParameter + this.backgroundParameter + TABULATEDMESSAGE  + messageParameter + TABULATEDMESSAGE + this.TRANSPARENT_BACKGROUND_COLOR
-	    return console.log(ALIGN_MESSAGE_PATTERN)
+	    
+	    this.TABULATEDMESSAGE = this.TABULATION.repeat((this.WINDOW_PROPORTION.WINDOW_WIDTH / 2) - (messageParameter.length / 2))
+	    this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TABULATEDMESSAGE + this.TRANSPARENT_BACKGROUND_COLOR
+	    return console.log(this.ALIGN_MESSAGE_PATTERN)
     }
+
     textAlignRight(messageParameter: string, colorParameter: string, backgroundParameter: string){
 	    this.messageParameter = messageParameter
 	    this.colorParameter = colorParameter
 	    this.backgroundParameter = backgroundParameter
-	    const TABULATION = " "
-	    const TABULATEDMESSAGE = TABULATION.repeat(this.WINDOWWIDTH - messageParameter.length)
-	    const ALIGN_MESSAGE_PATTERN: string = this.colorParameter + this.backgroundParameter + TABULATEDMESSAGE  + messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
-	    return console.log(ALIGN_MESSAGE_PATTERN)
+
+	    this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WINDOW_WIDTH - messageParameter.length)
+	    this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
+	    return console.log(this.ALIGN_MESSAGE_PATTERN)
     }
 }
 
