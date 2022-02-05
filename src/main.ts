@@ -51,31 +51,27 @@ const background: Colors = {
 
 // Happy colouring!
 class ColorText {
-    private WINDOW_PROPORTION = {WINDOW_WIDTH: execSync("tput cols", {encoding: 'utf8'}), WINDOW_HEIGHT: execSync("tput lines", {encoding: 'utf8'})}
+    private WINDOW_PROPORTION = {WIDTH: execSync("tput cols", {encoding: 'utf8'}), HEIGHT: execSync("tput lines", {encoding: 'utf8'})}
     TRANSPARENT_BACKGROUND_COLOR: string = "\033[1;31;49m"
 
-    //
+    // Parameters
     private messageParameter: string = "Example msg"
     private colorParameter: string = light.blue
     private backgroundParameter: string = this.TRANSPARENT_BACKGROUND_COLOR
 
-    //Case tabulation not have spaces, will not work
-    private TABULATION: string = " "
-    private TABULATEDMESSAGE: string = ""
+    //Case tabulation not have spaces, will NOT work!!
+    private TABULATION: string = " " 
+    private TABULATEDMESSAGE = " "
     private ALIGN_MESSAGE_PATTERN: string = ""
     
     charPosition = {x: 0, y: 0}
-
-    showcase(){
-	    return ""
-    }
 
     output(messageParameter: string, colorParameter: string, backgroundParameter: string){
 	this.messageParameter = messageParameter
 	this.colorParameter = colorParameter
 	this.backgroundParameter = backgroundParameter
 	
-	this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WINDOW_WIDTH - messageParameter.length)
+	this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WIDTH - messageParameter.length)
 	const OUTPUT_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.messageParameter + this.TABULATEDMESSAGE +this.TRANSPARENT_BACKGROUND_COLOR
 	return console.log(OUTPUT_MESSAGE_PATTERN)
     }
@@ -85,7 +81,7 @@ class ColorText {
 	this.colorParameter = colorParameter
 	this.backgroundParameter = backgroundParameter
 	
-	this.TABULATEDMESSAGE = this.TABULATION.repeat((this.WINDOW_PROPORTION.WINDOW_WIDTH / 2) - (messageParameter.length / 2))
+	this.TABULATEDMESSAGE = this.TABULATION.repeat((this.WINDOW_PROPORTION.WIDTH / 2) - (messageParameter.length / 2))
 	this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TABULATEDMESSAGE + this.TRANSPARENT_BACKGROUND_COLOR
 	return console.log(this.ALIGN_MESSAGE_PATTERN)
     }
@@ -95,7 +91,7 @@ class ColorText {
 	this.colorParameter = colorParameter
 	this.backgroundParameter = backgroundParameter
 
-	this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WINDOW_WIDTH - messageParameter.length)
+	this.TABULATEDMESSAGE = this.TABULATION.repeat(this.WINDOW_PROPORTION.WIDTH - messageParameter.length)
 	this.ALIGN_MESSAGE_PATTERN = this.colorParameter + this.backgroundParameter + this.TABULATEDMESSAGE  + messageParameter + this.TRANSPARENT_BACKGROUND_COLOR
 	return console.log(this.ALIGN_MESSAGE_PATTERN)
     }
@@ -105,9 +101,13 @@ class ColorText {
 	this.charPosition.x = xPosition
 	this.charPosition.y = yPosition
 
-	//Coloring causes a bug
+	//Coloring this causes a bug
 	const FIXED_MESSAGE_PATTERN = console.log(`\x1b7\x1b[%d;%df%s\x1b8`, xPosition, yPosition, messageParameter)
 	return FIXED_MESSAGE_PATTERN
+    }
+
+    clean(){
+	return console.log("\033c")
     }
 }
 
@@ -116,5 +116,4 @@ export {
 	light,
 	bold,
 	background,
-	Colors
 }
